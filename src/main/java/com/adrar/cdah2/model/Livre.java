@@ -1,6 +1,7 @@
 package com.adrar.cdah2.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class Livre {
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
+    @Valid
     private User user;
 
 
