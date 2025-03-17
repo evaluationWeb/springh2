@@ -3,6 +3,8 @@ package com.adrar.cdah2.model;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "livre")
@@ -25,8 +27,11 @@ public class Livre {
     @Temporal(TemporalType.DATE)
     private Date datePublication;
 
-    @Column(name = "genres", nullable = true, length = 50)
-    private String genres;
+    @ManyToMany
+    @JoinTable(name = "livre_genre",
+            joinColumns = @JoinColumn(name = "livre_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genres;
 
     @Column(name = "auteur", nullable = true, length = 50)
     private String auteur;
@@ -44,21 +49,22 @@ public class Livre {
                   Constructeurs
     ---------------------------------------*/
     public Livre() {
+        this.genres = new ArrayList<>();
     }
 
     public Livre(String titre, String description, Date datePublication) {
         this.titre = titre;
         this.description = description;
         this.datePublication = datePublication;
+        this.genres = new ArrayList<>();
     }
 
     public Livre(String titre, String description,
-                 Date datePublication, String genres,
+                 Date datePublication,
                  String auteur, MaisonEdition maisonEdition) {
         this.titre = titre;
         this.description = description;
         this.datePublication = datePublication;
-        this.genres = genres;
         this.auteur = auteur;
         this.maisonEdition = maisonEdition;
     }
@@ -99,12 +105,16 @@ public class Livre {
         this.datePublication = datePublication;
     }
 
-    public String getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(String genres) {
-        this.genres = genres;
+    public void addGenre(Genre genre){
+        this.genres.add(genre);
+    }
+
+    public void removeGenre(Genre genre){
+        this.genres.remove(genre);
     }
 
     public String getAuteur() {
