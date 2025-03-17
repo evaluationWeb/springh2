@@ -31,14 +31,13 @@ public class Livre {
     @Column(name = "auteur", nullable = true, length = 50)
     private String auteur;
 
-    @Column(name = "maison_edition", nullable = true, length = 50)
-    private String maisonEdition;
-
+    @ManyToOne
+    @JoinColumn(name= "maison_edition_id")
+    private MaisonEdition maisonEdition;
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
     private User user;
-
 
 
     /*---------------------------------------
@@ -53,7 +52,9 @@ public class Livre {
         this.datePublication = datePublication;
     }
 
-    public Livre(String titre, String description, Date datePublication, String genres, String auteur, String maisonEdition) {
+    public Livre(String titre, String description,
+                 Date datePublication, String genres,
+                 String auteur, MaisonEdition maisonEdition) {
         this.titre = titre;
         this.description = description;
         this.datePublication = datePublication;
@@ -114,11 +115,11 @@ public class Livre {
         this.auteur = auteur;
     }
 
-    public String getMaisonEdition() {
+    public MaisonEdition getMaisonEdition() {
         return maisonEdition;
     }
 
-    public void setMaisonEdition(String maisonEdition) {
+    public void setMaisonEdition(MaisonEdition maisonEdition) {
         this.maisonEdition = maisonEdition;
     }
 
