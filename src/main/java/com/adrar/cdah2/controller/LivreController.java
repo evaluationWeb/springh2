@@ -5,6 +5,7 @@ import com.adrar.cdah2.exception.LivreNotFoundException;
 import com.adrar.cdah2.exception.NoLivreFoundException;
 import com.adrar.cdah2.model.Livre;
 import com.adrar.cdah2.service.LivreService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class LivreController {
     // Méthode qui ajoute un Livre
     @PostMapping("/livre")
     @ResponseStatus(HttpStatus.CREATED)
-    public Livre saveLivre(@RequestBody Livre livre) {
+    public Livre saveLivre(@Valid @RequestBody Livre livre) {
         return livreService.add(livre);
     }
 

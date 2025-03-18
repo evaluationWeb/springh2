@@ -1,6 +1,8 @@
 package com.adrar.cdah2.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "genre")
@@ -12,6 +14,8 @@ public class Genre {
 
 
     @Column(name= "name", nullable = false, unique = true, length = 50)
+    @NotBlank(message = "Le nom du genre ne doit pas être vide")
+    @Size(min = 3, max = 50, message = "Le nom du genre doit contenir entre 3 et 50 caractères")
     private String name;
 
     public Genre() {

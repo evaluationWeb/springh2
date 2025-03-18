@@ -1,7 +1,11 @@
 package com.adrar.cdah2.model;
 
+import com.adrar.cdah2.validation.*;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -19,13 +23,20 @@ public class Livre {
     private Integer id;
 
     @Column(name = "titre", nullable = false, length = 50)
+    @NotBlank(message = "Le titre du Livre ne doit pas être vide")
+    @Size(min = 3, max = 50, message = "Le titre du Livre doit contenir entre 3 et 50 caractères")
     private String titre;
 
     @Column(name = "description", nullable = false, length = 255)
+    @NotBlank(message = "La description du Livre ne doit pas être vide")
+    @Size(min = 5, max = 255, message = "La description du Livre doit contenir entre 5 et 255 caractères")
     private String description;
 
     @Column(name = "date_publication", nullable = false)
     @Temporal(TemporalType.DATE)
+    @PastOrPresentYear(
+            min= 1500,
+            message= "La date de publication doit être comprise entre 1500 et l'année courante")
     private Date datePublication;
 
     @ManyToMany
@@ -35,6 +46,7 @@ public class Livre {
     private List<Genre> genres;
 
     @Column(name = "auteur", nullable = true, length = 50)
+    @NotNull(message = "L'auteur du Livre ne doit pas être null")
     private String auteur;
 
     @ManyToOne
@@ -43,9 +55,7 @@ public class Livre {
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
-    @Valid
     private User user;
-
 
     /*---------------------------------------
                   Constructeurs
